@@ -1,9 +1,10 @@
-import { NCLinkFullSync } from "../NCLinkFullSync.js";
+import { NCLinkFullSync } from "./NCLinkFullSync.js";
 
-export function GATE_LINK(gateValue) {
+export function syncRoom(room) {
   return NCLinkFullSync({
-    gate: gateValue,
-    route: "ODD-SPRUNG",
-    sync: true
+    gate: room.gate,
+    ist: room.ist,
+    soll: room.soll,
+    route: "ODD-GATE-AXIS"
   });
 }
