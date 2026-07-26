@@ -1,28 +1,18 @@
-# ANKER – Stabilisationsachse · iki1uc
+# WLOCH – Digitale Stabilisationsachse
+
+WLOCH ist eine technische Stabilisationsachse im NC/LINK-System.
 
 ## Zweck
-ANKER ist die Stabilisationsachse des iki1uc‑Systems.
-Es hält die Achsen IQ, QI, EVO, UPD, UPG, BIOS und CALC im korrekten Verhältnis.
+- Stabilisiert digitale Verbindungen
+- Reduziert Routing-Vibrationen
+- Fixiert Richtungen (digitaler Anker)
+- Dient als Gate/Route für CONNECT, PX-Gate, NCLinkFullSync
+- Kann wie ein HTML-Head-Style-Anker genutzt werden
 
-## Struktur
-- NAME: ANKER
-- ID: A01
-- Station: S01
-- Dimension: D4
-- Modus: erabel (neutral, operation möglich)
+## Funktionen
+- anchor() – setzt den digitalen Anker
+- stabilise(link) – stabilisiert jeden LINK-Datensatz
+- injectHead() – fügt WLOCH als Head-Style-Anchor in HTML ein
 
-## Rolle
-ANKER stabilisiert, ohne selbst aktiv zu berechnen oder zu steuern.
-Es ist die neutrale Achse zwischen AXI, 6d und API.
-
-## Bindungen
-- AXI
-- 6d
-- 360
-- 100
-- 213 (REAL)
-- API
-
-## Status
-STATE = STABIL  
-READY = 100%
+## Einsatz
+Wird in index.html, link.js, NCLinkFullSync.js, PXGateSync.js verwendet.
