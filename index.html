@@ -2,9 +2,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>GATE · SPRUNG-ACHSE</title>
+<title>ODD-GATE-AXIS · GATE SYSTEM</title>
 <style>
 body { background:#111; color:#eee; font-family:Arial; }
+h1 { color:#6cf; }
 .section { padding:10px; border:1px solid #333; margin-bottom:20px; }
 pre { background:#222; padding:10px; }
 button { padding:10px; background:#6cf; border:none; cursor:pointer; }
@@ -13,22 +14,73 @@ button:hover { background:#9ef; }
 </head>
 <body>
 
-<h1>GATE · SPRUNG-ACHSE</h1>
+<h1>ODD-GATE-AXIS · SHOW MUST BEGIN</h1>
 
 <div class="section">
-  <h2>Sprung</h2>
-  <pre id="jumpOut">Bereit…</pre>
+  <h2>Aktueller Raum</h2>
+  <pre id="currentOut">Noch kein Sprung…</pre>
 </div>
 
-<button onclick="startJump()">SPRUNG STARTEN</button>
+<div class="section">
+  <h2>Nächster Sprung</h2>
+  <pre id="nextOut">Bereit…</pre>
+</div>
+
+<div class="section">
+  <h2>Mathematischer Sprung</h2>
+  <pre id="mathOut">Bereit…</pre>
+</div>
+
+<div class="section">
+  <h2>WLOCH Stabilisation</h2>
+  <pre id="wlochOut">Bereit…</pre>
+</div>
+
+<div class="section">
+  <h2>NC-LINK Routing</h2>
+  <pre id="linkOut">Bereit…</pre>
+</div>
+
+<button onclick="startGate()">SPRUNG STARTEN</button>
 
 <script type="module">
 import { GATE } from "./GATE.js";
+import { WLOCH } from "./WLOCH/WLOCH.js";
+import { NCLinkFullSync } from "./NCLinkFullSync.js";
 
-window.startJump = () => {
-  const result = GATE.jump(3, 7);
-  document.getElementById("jumpOut").innerText =
-    JSON.stringify(result, null, 2);
+window.startGate = () => {
+
+  // Startwert: ZETA = 0.room
+  let current = GATE.nodes.ZETA;
+
+  document.getElementById("currentOut").innerText =
+    "Start: ZETA → " + current;
+
+  // Nächster Sprung (0 → 1)
+  const next = GATE.next(current);
+  document.getElementById("nextOut").innerText =
+    "Sprung: " + current + " → " + next;
+
+  // Mathematischer Sprung
+  const math = GATE.jump(current, next);
+  document.getElementById("mathOut").innerText =
+    JSON.stringify(math, null, 2);
+
+  // WLOCH Stabilisation
+  const wloch = WLOCH.stabilise({
+    gate: next,
+    axis: "ODD-GATE-AXIS"
+  });
+  document.getElementById("wlochOut").innerText =
+    JSON.stringify(wloch, null, 2);
+
+  // NC-LINK Routing
+  const link = NCLinkFullSync({
+    gate: next,
+    route: "ODD-GATE-AXIS"
+  });
+  document.getElementById("linkOut").innerText =
+    JSON.stringify(link, null, 2);
 };
 </script>
 
